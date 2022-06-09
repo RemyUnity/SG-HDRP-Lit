@@ -65,17 +65,17 @@ namespace UnityEditor.ShaderGraph
         {
             var inputEnabledValue = GetSlotValue(InputEnabledSlotId, generationMode);
             var inputDisabledValue = GetSlotValue(InputDisabledSlotId, generationMode);
-            var outputValue = GetSlotValue(OutputSlotId, generationMode);
-            var outputBoolValue = GetSlotValue(OutputBoolSlotId, generationMode);
+            var outputName = GetVariableNameForSlot(OutputSlotId);
+            var outputBoolName = GetVariableNameForSlot(OutputBoolSlotId);
 
             sb.AppendLine("{0} {1};", FindOutputSlot<MaterialSlot>(OutputSlotId).concreteValueType.ToShaderString(), GetVariableNameForSlot(OutputSlotId));
             sb.AppendLine("{0} {1};", FindOutputSlot<MaterialSlot>(OutputBoolSlotId).concreteValueType.ToShaderString(), GetVariableNameForSlot(OutputBoolSlotId));
             sb.AppendLine("#ifdef {0}", m_keyword );
-            sb.AppendLine("{0} = {1};", outputValue, inputEnabledValue);
-            sb.AppendLine("{0} = true;", outputBoolValue);
+            sb.AppendLine("{0} = {1};", outputName, inputEnabledValue);
+            sb.AppendLine("{0} = true;", outputBoolName);
             sb.AppendLine("#else");
-            sb.AppendLine("{0} = {1};", outputValue, inputDisabledValue);
-            sb.AppendLine("{0} = false;", outputBoolValue);
+            sb.AppendLine("{0} = {1};", outputName, inputDisabledValue);
+            sb.AppendLine("{0} = false;", outputBoolName);
             sb.AppendLine("#endif");
         }
     }
